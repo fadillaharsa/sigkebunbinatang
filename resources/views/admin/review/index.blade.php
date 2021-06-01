@@ -46,7 +46,7 @@
                                 </td>
                                 <td>@if ($ulasan->status==1) Dipublikasikan @else Disembunyikan @endif</td>
                                 <td>
-                                    <a href="" class="btn btn-sm btn-secondary text-white"><i class="fas fa-globe"></i> Lihat</a>
+                                    <a href="{{route('lihatfasilitas',$ulasan->facility->id)}}" class="btn btn-sm btn-secondary text-white"><i class="fas fa-globe"></i> Lihat</a>
                                     @if ($ulasan->status==1)
                                         <a href="{{route('review.edit',$ulasan->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-eye-slash"></i> Sembunyikan</a>
                                     @else
