@@ -154,7 +154,7 @@ if (navigator.geolocation) {
                         // Add the first marker
                         let pngIcon = new H.map.Icon(`${window.appURL}/public/storage/${value.icon}`, { size: { w: 40, h: 40 } });
                         let distance= value.distance;
-                        distance = distance.toFixed(2);
+                        distance = parseFloat(distance).toFixed(2);
                         let marker = new H.map.Marker({ lat: value.latitude, lng: value.longitude}, { icon: pngIcon });
                             marker.setData(`${value.title}<br><small>Jarak: ${distance} KM</small><br><a href="${window.appURL}/fasilitas/${value.id}">Lihat Detail</a>`);
                             facilities.push(marker);
