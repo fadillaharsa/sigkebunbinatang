@@ -106,7 +106,7 @@
         };
         function success(pos) {}
         function error(err) {
-            window.location = window.appURL;
+            window.location =  `${window.appURL}/galat`;
         }
         navigator.geolocation.getCurrentPosition(success, error, options);  
     </script>
