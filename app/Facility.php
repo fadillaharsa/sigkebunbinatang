@@ -19,7 +19,7 @@ public function routelist() {
     return $this->hasMany(Animal::class, 'facility_id', 'id');
 }
 public function getFacilities($latitude, $longitude, $radius, $category) {
-    return $this->select('facilities.*')
+    return $this->select('facilities.*')->where('category',$category)
         ->selectRaw(
             '( 6371 *
                 acos( cos( radians(?) ) *
