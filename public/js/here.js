@@ -148,9 +148,9 @@ if (navigator.geolocation) {
             let myLink = `${window.appURL}/api/facilities?lat=${latitude}&lng=${longitude}&rad=${radius}&`;
             category.forEach((x, i) => {
             if (i === 0) {
-                myLink += `category=${x}`;
+                myLink += `category[]=${x}`;
             } else {
-                myLink += `&category=${x}`;
+                myLink += `&category[]=${x}`;
             }
             });
             return new Promise(function (resolve, reject) {
