@@ -145,9 +145,17 @@ if (navigator.geolocation) {
         // Browse location facilities
         let facilities = [];
         const fetchFacilities = function (latitude, longitude, radius) {
+            let myLink = `${window.appURL}/api/facilities?lat=${latitude}&lng=${longitude}&rad=${radius}&`;
+            category.forEach((x, i) => {
+            if (i === 0) {
+                myLink += `category=${x}`;
+            } else {
+                myLink += `&category=${x}`;
+            }
+            });
             return new Promise(function (resolve, reject) {
                 resolve(
-                    fetch(`${window.appURL}/api/facilities?lat=${latitude}&lng=${longitude}&rad=${radius}&category[]=${category}`)
+                    fetch(myLink)
                     .then((res) => res.json())
                     .then(function(data) {
                         data.forEach(function (value, index) {
