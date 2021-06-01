@@ -23,9 +23,10 @@ public function create() {
 }
 
 public function store(Request $request) {
+
     $this->validate($request,[
         'title' => ['required'],
-        'code' => ['required'],
+        'code' => ['required','unique:facilities,code'],
         'photo' => ['required','mimes:jpg,png'],
         'description' => ['required'],
         'category' => ['required'],
@@ -77,7 +78,7 @@ public function update(Request $request, $id) {
     $facility = Facility::findOrFail($id);
     $this->validate($request,[
         'title' => ['required'],
-        'code' => ['required'],
+        'code' => ['required','unique:facilities,code'],
         'photo' => ['mimes:jpg,png'],
         'description' => ['required'],
         'category' => ['required'],
