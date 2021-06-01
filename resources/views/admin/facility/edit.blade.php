@@ -39,7 +39,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="">Kategori Fasilitas</label>
-                                {{Form::select('category', ['Kandang Satwa' => 'Kandang Satwa', 'Fasilitas Isoma' => 'Fasilitas Isoma', 'Fasilitas Bermain' => 'Fasilitas Bermain','Gerbang' => 'Gerbang'], null, ['class'=>'form-control','placeholder' => 'Pilih kategori fasilitas'])}}
+                                {{Form::select('category', ['Kandang Satwa' => 'Kandang Satwa', 'Fasilitas Isoma' => 'Fasilitas Isoma', 'Fasilitas Bermain' => 'Fasilitas Bermain','Toilet' => 'Toilet','Gerbang' => 'Gerbang'], null, ['class'=>'form-control','placeholder' => 'Pilih kategori fasilitas'])}}
                             </div>
                             @if ($errors->has('category'))
                                 <ul class="alert alert-danger">
