@@ -147,7 +147,7 @@ if (navigator.geolocation) {
         const fetchFacilities = function (latitude, longitude, radius) {
             return new Promise(function (resolve, reject) {
                 resolve(
-                    fetch(`https://kebunbinatang.app/api/facilities?lat=${latitude}&lng=${longitude}&rad=${radius}&category[]=${category}`)
+                    fetch(`${window.appURL}/api/facilities?lat=${latitude}&lng=${longitude}&rad=${radius}&category[]=${category}`)
                     .then((res) => res.json())
                     .then(function(data) {
                         data.forEach(function (value, index) {
@@ -156,13 +156,13 @@ if (navigator.geolocation) {
                         let distance= value.distance;
                         let rounded = Math.round((distance + Number.EPSILON) * 100) * 10;
                         let marker = new H.map.Marker({ lat: value.latitude, lng: value.longitude}, { icon: pngIcon });
-                            marker.setData(`${value.title}<br><small>Jarak: ${rounded} M</small><br><a href="https://kebunbinatang.app/fasilitas/${value.id}">Lihat Detail</a>`);
+                            marker.setData(`${value.title}<br><small>Jarak: ${rounded} M</small><br><a href="${window.appURL}/fasilitas/${value.id}">Lihat Detail</a>`);
                             facilities.push(marker);
                         if(index==0){
-                            document.getElementById("terdekat").innerHTML = `<a href="https://kebunbinatang.app/fasilitas/${value.id}">${value.title}`;
+                            document.getElementById("terdekat").innerHTML = `<a href="${window.appURL}/fasilitas/${value.id}">${value.title}`;
                         }
                         })
-                        let pngIcon = new H.map.Icon(`${window.appURL}/assets/images/now.png`, { size: { w: 40, h: 40 } });
+                        let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
                         let markerNow = new H.map.Marker({ lat: objLocalCoord.lat, lng: objLocalCoord.lng}, { icon: pngIcon });
                         markerNow.setData(`Lokasi Anda`);
                         facilities.push(markerNow);
@@ -210,7 +210,7 @@ if (navigator.geolocation) {
         let urlParams = new URLSearchParams(window.location.search);
         if (window.action == 'direction') {
             addPolylineToMap(map);
-            let pngIcon = new H.map.Icon(`${window.appURL}/assets/images/now.png`, { size: { w: 40, h: 40 } });
+            let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
             let markerStart = new H.map.Marker({ lat: urlParams.get('fromLat'), lng: urlParams.get('fromLng')}, { icon: pngIcon });
             map.addObject(markerStart);
             let pngIcon2 = new H.map.Icon(`${window.appURL}/storage/${window.facilityIcon}`, { size: { w: 40, h: 40 } });
