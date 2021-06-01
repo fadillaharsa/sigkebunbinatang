@@ -78,7 +78,7 @@ public function update(Request $request, $id) {
     $facility = Facility::findOrFail($id);
     $this->validate($request,[
         'title' => ['required'],
-        'code' => ['required','unique:facilities,code'],
+        'code' => ['required'],
         'photo' => ['mimes:jpg,png'],
         'description' => ['required'],
         'category' => ['required'],
