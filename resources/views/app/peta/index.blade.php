@@ -98,6 +98,7 @@
         window.action = "browse"
     </script>
     <script>
+        window.appURL = "{{env('APP_URL')}}"
         let options = {
             enableHighAccuracy: true,
             timeout: 5000,
@@ -105,7 +106,7 @@
         };
         function success(pos) {}
         function error(err) {
-            window.location = "https://kebunbinatang.app/galat";
+            window.location = window.appURL;
         }
         navigator.geolocation.getCurrentPosition(success, error, options);  
     </script>

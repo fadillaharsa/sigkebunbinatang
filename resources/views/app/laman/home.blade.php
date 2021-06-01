@@ -123,7 +123,7 @@
 </body>
 
 <script>
-window.hereApiKey = "{{env('HERE_API_KEY')}}"
+window.appURL = "{{env('APP_URL')}}"
 let deferredPrompt;
 const addBtn = document.querySelector('.add-button');
 const installSection = document.querySelector('.installPWA');
@@ -145,7 +145,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
             console.log('User accepted the A2HS prompt');
-            window.location = window.hereApiKey;
+            window.location = window.appURL;
         } else {
             console.log('User dismissed the A2HS prompt');
         }
@@ -156,7 +156,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 </script>
 <script>
 if (window.matchMedia('(display-mode: standalone)').matches) {
-    window.location = "https://kebunbinatang.app/home";
+    window.location = window.appURL;
 }
 </script>
 </html>
