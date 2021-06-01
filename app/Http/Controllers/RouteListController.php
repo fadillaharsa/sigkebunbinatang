@@ -55,7 +55,7 @@ public function update(Request $request, $id) {
     $routelist->update([
         'facility_id' => $request->facility_id,
     ]);
-    return redirect()->route('routelist.show',$request->route_id)->with('status','List rute berhasil diubah.');
+    return redirect()->route('routelist.show',$id)->with('status','List rute berhasil diubah.');
 }
 
 public function destroy(Request $request) {
