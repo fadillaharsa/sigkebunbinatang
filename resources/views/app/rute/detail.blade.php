@@ -40,6 +40,7 @@
 @push('script')
     <script>
         window.action = "direction"
+        window.facilityIcon = "{{$fasilitas->icon}}"
     </script>
     <script>
         window.hereApiKey = "{{env('HERE_API_KEY')}}"
