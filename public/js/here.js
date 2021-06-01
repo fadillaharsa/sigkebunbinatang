@@ -152,7 +152,7 @@ if (navigator.geolocation) {
                     .then(function(data) {
                         data.forEach(function (value, index) {
                         // Add the first marker
-                        let pngIcon = new H.map.Icon(`${window.appURL}/public/storage/${value.icon}`, { size: { w: 40, h: 40 } });
+                        let pngIcon = new H.map.Icon(`${window.appURL}/public/storage/${value.icon}`, { size: { w: 30, h: 30 } });
                         let distance= value.distance;
                         let rounded = Math.round((distance + Number.EPSILON) * 100) * 10;
                         let marker = new H.map.Marker({ lat: value.latitude, lng: value.longitude}, { icon: pngIcon });
@@ -162,7 +162,7 @@ if (navigator.geolocation) {
                             document.getElementById("terdekat").innerHTML = `<a href="${window.appURL}/fasilitas/${value.id}">${value.title}`;
                         }
                         })
-                        let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
+                        let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 30, h: 30 } });
                         let markerNow = new H.map.Marker({ lat: objLocalCoord.lat, lng: objLocalCoord.lng}, { icon: pngIcon });
                         markerNow.setData(`Lokasi Anda`);
                         facilities.push(markerNow);
