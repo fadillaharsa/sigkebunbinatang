@@ -152,7 +152,7 @@ if (navigator.geolocation) {
                     .then(function(data) {
                         data.forEach(function (value, index) {
                         // Add the first marker
-                        let pngIcon = new H.map.Icon(`${window.appURL}/storage/${value.icon}`, { size: { w: 40, h: 40 } });
+                        let pngIcon = new H.map.Icon(`${window.appURL}/assets/storage/${value.icon}`, { size: { w: 40, h: 40 } });
                         let distance= value.distance;
                         let rounded = Math.round((distance + Number.EPSILON) * 100) * 10;
                         let marker = new H.map.Marker({ lat: value.latitude, lng: value.longitude}, { icon: pngIcon });
