@@ -36,23 +36,23 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        @foreach($reviews as $ulasan)
+                        @foreach($reviews as $review)
                             <tr>
                                 <td>{{ $loop->index + 1}}</td>
-                                <td>{{ \Illuminate\Support\Str::limit($ulasan->review, 40, $end='...') }}</td>
-                                <td>@for($i = 1; $i <= $ulasan->rating; $i++)
+                                <td>{{ \Illuminate\Support\Str::limit($review->review, 40, $end='...') }}</td>
+                                <td>@for($i = 1; $i <= $review->rating; $i++)
                                         <i class="fas fa-star text-warning"></i>
                                     @endfor
                                 </td>
-                                <td>@if ($ulasan->status==1) Dipublikasikan @else Disembunyikan @endif</td>
+                                <td>@if ($review->status==1) Dipublikasikan @else Disembunyikan @endif</td>
                                 <td>
-                                    <a href="" class="btn btn-sm btn-secondary text-white"><i class="fas fa-globe"></i> Lihat</a>
-                                    @if ($ulasan->status==1)
-                                        <a href="{{route('review.edit',$ulasan->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-eye-slash"></i> Sembunyikan</a>
+                                    <a href="{{route('review.show',$review->id)}}" class="btn btn-sm btn-secondary text-white"><i class="fas fa-globe"></i> Lihat</a>
+                                    @if ($review->status==1)
+                                        <a href="{{route('review.edit',$review->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-eye-slash"></i> Sembunyikan</a>
                                     @else
-                                        <a href="{{route('review.edit',$ulasan->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-eye"></i> Publikasikan</a>
+                                        <a href="{{route('review.edit',$review->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-eye"></i> Publikasikan</a>
                                     @endif
-                                    <a href="" class="btn btn-sm btn-danger text-white addAttr" data-id={{$ulasan->id}} data-number={{ $loop->index + 1}} data-toggle="modal" data-target="#deleteModal">
+                                    <a href="" class="btn btn-sm btn-danger text-white addAttr" data-id={{$review->id}} data-number={{ $loop->index + 1}} data-toggle="modal" data-target="#deleteModal">
                                         <i class="fas fa-trash"></i> Hapus
                                     </a>
                                 </td>

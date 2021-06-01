@@ -33,7 +33,8 @@ public function store(Request $request) {
 }
 
 public function show($id) {
-    //
+    $review = Review::where('id',$id)->first();
+    return view('admin.review.detail', compact('review'));
 }
 
 public function edit($id) {
