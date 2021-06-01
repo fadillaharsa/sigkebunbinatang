@@ -31,7 +31,7 @@
         </a>
     </div>
 
-    <a href="" class="mb-3 btn btn-success text-white btn-block d-flex justify-content-between align-items-center">
+    <a href="#" onclick="openDirectionPage({{$satwa->facility->latitude}}, {{$satwa->facility->longitude}}, {{ $satwa->facility->id }})" class="mb-3 btn btn-success text-white btn-block d-flex justify-content-between align-items-center">
         <span></span>
         <span class="ml-2">Petunjuk Jalan</span>
         <i class="fas fa-route"></i>
@@ -41,5 +41,8 @@
 @endsection
 
 @push('script')
-
+<script>
+    window.hereApiKey = "{{env('HERE_API_KEY')}}"
+</script>
+<script src="{{ asset('js/here.js') }}"></script>
 @endpush
