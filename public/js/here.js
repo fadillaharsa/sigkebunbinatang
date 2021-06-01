@@ -23,7 +23,7 @@ if (navigator.geolocation) {
                 document.getElementById('mapContainer'),
                 defaultLayers.vector.normal.map,
                 {
-                    zoom: 16.2,
+                    zoom: 16.5,
                     center: objLocalCoord,
                     pixelRatio: window.devicePixelRatio || 1
                 });
@@ -171,7 +171,7 @@ if (navigator.geolocation) {
                         }
                         })
                         let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
-                        let markerNow = new H.map.Marker({ lat: objLocalCoord.lat, lng: objLocalCoord.lng}, { icon: pngIcon });
+                        let markerNow = new H.map.Marker({ lat: objUserCoord.lat, lng: objUserCoord.lng}, { icon: pngIcon });
                         markerNow.setData(`Lokasi Anda`);
                         facilities.push(markerNow);
                     })
@@ -241,11 +241,11 @@ if (navigator.geolocation) {
     })
 
     function openDirection(lat, lng, route_id,id) {
-        window.open(`/rute/${route_id}/destinasi/${id}?fromLat=${objLocalCoord.lat}&fromLng=${objLocalCoord.lng}&toLat=${lat}&toLng=${lng}`, "_self");
+        window.open(`/rute/${route_id}/destinasi/${id}?fromLat=${objUserCoord.lat}&fromLng=${objUserCoord.lng}&toLat=${lat}&toLng=${lng}`, "_self");
     }
 
     function openDirectionPage(lat, lng, id) {
-        window.open(`/fasilitas/${id}/petunjuk?fromLat=${objLocalCoord.lat}&fromLng=${objLocalCoord.lng}&toLat=${lat}&toLng=${lng}`, "_self");
+        window.open(`/fasilitas/${id}/petunjuk?fromLat=${objUserCoord.lat}&fromLng=${objUserCoord.lng}&toLat=${lat}&toLng=${lng}`, "_self");
     }
 } else {
     console.error("Geolocation is not supported by this browser!");
