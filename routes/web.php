@@ -49,3 +49,10 @@ Route::get('/tiket', 'PageController@ticket')->name('tiket');
 Route::get('/kontak', 'PageController@contact')->name('kontak');
 Route::get('/website', 'PageController@website')->name('website');
 Route::get('/guide', 'PageController@guide')->name('guide');
+
+Route::get('/serviceworker.js', function () {
+    return response(file_get_contents(asset('/serviceworker.js')), 200, [
+    'Content-Type' => 'text/javascript',
+    'Cache-Control' => 'public, max-age=3600',
+    ]);
+});
