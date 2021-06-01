@@ -162,7 +162,7 @@ if (navigator.geolocation) {
                             document.getElementById("terdekat").innerHTML = `<a href="${window.appURL}/fasilitas/${value.id}">${value.title}`;
                         }
                         })
-                        let pngIcon = new H.map.Icon(`${window.appURL}/assets/images/now.png`, { size: { w: 40, h: 40 } });
+                        let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
                         let markerNow = new H.map.Marker({ lat: objLocalCoord.lat, lng: objLocalCoord.lng}, { icon: pngIcon });
                         markerNow.setData(`Lokasi Anda`);
                         facilities.push(markerNow);
@@ -210,7 +210,7 @@ if (navigator.geolocation) {
         let urlParams = new URLSearchParams(window.location.search);
         if (window.action == 'direction') {
             addPolylineToMap(map);
-            let pngIcon = new H.map.Icon(`${window.appURL}/assets/images/now.png`, { size: { w: 40, h: 40 } });
+            let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
             let markerStart = new H.map.Marker({ lat: urlParams.get('fromLat'), lng: urlParams.get('fromLng')}, { icon: pngIcon });
             map.addObject(markerStart);
             let pngIcon2 = new H.map.Icon(`${window.appURL}/storage/${window.facilityIcon}`, { size: { w: 40, h: 40 } });
