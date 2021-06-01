@@ -38,7 +38,7 @@
                                 <td>{{$list->order}}</td>
                                 <td>{{$list->facility->title}}</td>
                                 <td>
-                                    <a href="{{route('routelist.edit',$route->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i> Edit</a>
+                                    <a href="{{route('routelist.edit',$list->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i> Edit</a>
                                     @if($list->order == $routelist->count())
                                     <a href="" class="btn btn-sm btn-danger text-white addAttr" data-id={{$list->id}} data-idrute={{$route->id}} data-toggle="modal" data-target="#deleteModal">
                                         <i class="fas fa-trash"></i> Hapus
