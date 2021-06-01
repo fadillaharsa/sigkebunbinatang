@@ -152,7 +152,7 @@ if (navigator.geolocation) {
                     .then(function(data) {
                         data.forEach(function (value, index) {
                         // Add the first marker
-                        let pngIcon = new H.map.Icon(`${window.appURL}/storage/${value.icon}`, { size: { w: 40, h: 40 } });
+                        let pngIcon = new H.map.Icon(`${window.appURL}/public/storage/${value.icon}`, { size: { w: 40, h: 40 } });
                         let distance= value.distance;
                         let rounded = Math.round((distance + Number.EPSILON) * 100) * 10;
                         let marker = new H.map.Marker({ lat: value.latitude, lng: value.longitude}, { icon: pngIcon });
@@ -213,7 +213,7 @@ if (navigator.geolocation) {
             let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
             let markerStart = new H.map.Marker({ lat: urlParams.get('fromLat'), lng: urlParams.get('fromLng')}, { icon: pngIcon });
             map.addObject(markerStart);
-            let pngIcon2 = new H.map.Icon(`${window.appURL}/storage/${window.facilityIcon}`, { size: { w: 40, h: 40 } });
+            let pngIcon2 = new H.map.Icon(`${window.appURL}/public/storage/${window.facilityIcon}`, { size: { w: 40, h: 40 } });
             let markerFinish = new H.map.Marker({ lat: urlParams.get('toLat'), lng: urlParams.get('toLng')}, { icon: pngIcon2 });
             map.addObject(markerFinish);
         }
