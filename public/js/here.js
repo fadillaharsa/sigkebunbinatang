@@ -23,7 +23,7 @@ if (navigator.geolocation) {
                 document.getElementById('mapContainer'),
                 defaultLayers.vector.normal.map,
                 {
-                    zoom: 16.5,
+                    zoom: 17,
                     center: objLocalCoord,
                     pixelRatio: window.devicePixelRatio || 1
                 });
