@@ -41,7 +41,7 @@
                                 <td>{{$route->name}}</td>
                                 <td><a href="{{route('routelist.show',$route->id)}}" class="btn btn-sm btn-success text-white"><i class="fas fa-list"></i> Kelola List</a></td>
                                 <td>
-                                    <a href="{{route('route')}}" class="btn btn-sm btn-secondary text-white"><i class="fas fa-globe"></i> Lihat</a>
+                                    <a href="{{route('rute')}}" class="btn btn-sm btn-secondary text-white"><i class="fas fa-globe"></i> Lihat</a>
                                     <a href="{{route('route.edit',$route->id)}}" class="btn btn-sm btn-info text-white"><i class="fas fa-edit"></i> Edit</a>
                                     <a href="" class="btn btn-sm btn-danger text-white addAttr" data-id={{$route->id}} data-number={{ $loop->index + 1}} data-toggle="modal" data-target="#deleteModal">
                                         <i class="fas fa-trash"></i> Hapus
