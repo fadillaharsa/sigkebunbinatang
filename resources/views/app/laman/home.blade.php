@@ -156,7 +156,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 </script>
 <script>
 if (window.matchMedia('(display-mode: standalone)').matches) {
-    window.location = window.appURL;
+    window.location = `${window.appURL}/home`;
 }
 </script>
 </html>
