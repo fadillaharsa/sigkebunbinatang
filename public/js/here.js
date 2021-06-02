@@ -211,7 +211,7 @@ if (navigator.geolocation) {
                 //init(resultCoord.lat, resultCoord.lng, 40);
             }, false);
 
-            init(group, objLocalCoord.lat, objLocalCoord.lng, 40);
+            init(group, objUserCoord.lat, objUserCoord.lng, 40);
 
         }
 
