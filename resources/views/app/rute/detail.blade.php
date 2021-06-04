@@ -17,6 +17,9 @@
     <img src="{{asset('storage/'.$destinasi->facility->photo)}}" class="img-fluid mb-3" style="width: 100%">
     <p>{{$destinasi->facility->description}}</p>
     <H1 class="mb-3"><b>PETA</b></H1>
+<img src="{{ asset('assets/images/now.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Start</span>
+<img src="{{ asset('assets/images/position.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Lokasi Realtime</span>
+<img src="{{ asset('assets/images/gerbang.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Gerbang (Patokan)</span>
     <div style="height:500px" id="mapContainer"></div>  
     {{-- <div class="card mb-3">
         <div class="card-body">

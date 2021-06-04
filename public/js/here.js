@@ -1,4 +1,5 @@
 if (navigator.geolocation) {
+    let options;
     navigator.geolocation.getCurrentPosition(position => {
         localCoord = position.coords;
         objLocalCoord = {
@@ -10,7 +11,7 @@ if (navigator.geolocation) {
             lat: localCoord.latitude,
             lng: localCoord.longitude
         }
-
+        
         let platform = new H.service.Platform({
             'apikey': window.hereApiKey
         });
@@ -24,7 +25,7 @@ if (navigator.geolocation) {
                 defaultLayers.vector.normal.map,
                 {
                     zoom: 17.5,
-                    center: objLocalCoord,
+                    center: objUserCoord,
                     pixelRatio: window.devicePixelRatio || 1
                 });
             window.addEventListener('resize', () => map.getViewPort().resize());
@@ -32,9 +33,8 @@ if (navigator.geolocation) {
                          
         let ui = H.ui.UI.createDefault(map, defaultLayers);
         let zoom = ui.getControl('zoom');
-
-        zoom.setAlignment('top-left');
         restrictMap(map);
+        zoom.setAlignment('top-left');
         // Create an info bubble object at a specific geographic location:
         let bubble = new H.ui.InfoBubble({ lng: -6.99688, lat: 107.56771 }, {
             content: '<b>Hello World!</b>'
@@ -170,10 +170,6 @@ if (navigator.geolocation) {
                             document.getElementById("terdekat").innerHTML = `<a href="${window.appURL}/fasilitas/${value.id}">${value.title}`;
                         }
                         })
-                        let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
-                        let markerNow = new H.map.Marker({ lat: objUserCoord.lat, lng: objUserCoord.lng}, { icon: pngIcon });
-                        markerNow.setData(`Lokasi Anda`);
-                        facilities.push(markerNow);
                     })
                 )
             })
@@ -212,23 +208,70 @@ if (navigator.geolocation) {
             }, false);
 
             init(group, objUserCoord.lat, objUserCoord.lng, 40);
+            navigator.geolocation.watchPosition(position => {
+                localCoord = position.coords;
+                objAsalCoord = {
+                    lat: localCoord.latitude,
+                    lng: localCoord.longitude
+                }
+            },error,options
+            )
 
+            navigator.geolocation.getCurrentPosition(position => {
+                localCoord = position.coords;
+                objNowCoord = {
+                    lat: localCoord.latitude,
+                    lng: localCoord.longitude
+                }
+                let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
+                let markerStart = new H.map.Marker({ lat: objNowCoord.lat, lng: objNowCoord.lng}, { icon: pngIcon });
+                map.addObject(markerStart);
+            },error,options
+            )
         }
 
         let urlParams = new URLSearchParams(window.location.search);
         if (window.action == 'direction') {
-            addPolylineToMap(map);
-            let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
-            let markerStart = new H.map.Marker({ lat: urlParams.get('fromLat'), lng: urlParams.get('fromLng')}, { icon: pngIcon });
-            map.addObject(markerStart);
+            
+            navigator.geolocation.watchPosition(position => {
+                localCoord = position.coords;
+                objNowCoord = {
+                    lat: localCoord.latitude,
+                    lng: localCoord.longitude
+                }
+                let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/position.png`, { size: { w: 15, h: 15 } });
+                let markerNow = new H.map.Marker({ lat: objNowCoord.lat, lng: objNowCoord.lng}, { icon: pngIcon });
+                map.addObject(markerNow);
+            },error,options
+            )
+            
+            navigator.geolocation.getCurrentPosition(position => {
+                localCoord = position.coords;
+                objNowCoord = {
+                    lat: localCoord.latitude,
+                    lng: localCoord.longitude
+                }
+                addPolylineToMap(map,objNowCoord);
+                let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
+                let markerStart = new H.map.Marker({ lat: objNowCoord.lat, lng: objNowCoord.lng}, { icon: pngIcon });
+                map.addObject(markerStart);
+            },error,options
+            )
+            
             let pngIcon2 = new H.map.Icon(`${window.appURL}/public/storage/${window.facilityIcon}`, { size: { w: 40, h: 40 } });
             let markerFinish = new H.map.Marker({ lat: urlParams.get('toLat'), lng: urlParams.get('toLng')}, { icon: pngIcon2 });
             map.addObject(markerFinish);
+            
+            let pngGate = new H.map.Icon(`${window.appURL}/public/assets/images/gerbang.png`, { size: { w: 40, h: 40 } });
+                let markerGate = new H.map.Marker({ lat: -6.89002, lng: 107.60758}, { icon: pngGate });
+                map.addObject(markerGate);
+            
+
         }
 
-        function addPolylineToMap(map) {
+        function addPolylineToMap(map,objNowCoord) {
             let lineString = new H.geo.LineString();
-            lineString.pushPoint({lat:urlParams.get('fromLat'), lng:urlParams.get('fromLng')});
+            lineString.pushPoint({lat:objNowCoord.lat, lng:objNowCoord.lng});
             lineString.pushPoint({lat:urlParams.get('toLat'), lng:urlParams.get('toLng')});
             
             map.addObject(new H.map.Polyline(
@@ -236,9 +279,20 @@ if (navigator.geolocation) {
             ));
         }
 
-        
+    },error,options
+    )
 
-    })
+    function error(err) {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+    }
+      
+    options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge:10000
+    };
+
+
 
     function openDirection(lat, lng, route_id,id) {
         window.open(`/rute/${route_id}/destinasi/${id}?fromLat=${objUserCoord.lat}&fromLng=${objUserCoord.lng}&toLat=${lat}&toLng=${lng}`, "_self");
@@ -247,6 +301,7 @@ if (navigator.geolocation) {
     function openDirectionPage(lat, lng, id) {
         window.open(`/fasilitas/${id}/petunjuk?fromLat=${objUserCoord.lat}&fromLng=${objUserCoord.lng}&toLat=${lat}&toLng=${lng}`, "_self");
     }
+
 } else {
     console.error("Geolocation is not supported by this browser!");
 }

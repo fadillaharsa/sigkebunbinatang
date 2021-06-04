@@ -32,8 +32,8 @@
     @endif 
     <p>Cara Penggunaan: <br> Ketuk Gambar Ikon untuk Melihat Detil</p>  
 </div>
-<span class="text-info mb-1">Terdekat: <span id="terdekat"></span></span>
-<img src="{{ asset('assets/images/now.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Lokasi Sekarang</span>
+<span class="text-info mb-1">Terdekat: <span id="terdekat"></span></span><br>
+<img src="{{ asset('assets/images/now.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Lokasi Sekarang (Tidak Realtime)</span>
 <div style="height:500px" id="mapContainer"></div> 
 
 <!-- Modal -->
@@ -100,15 +100,22 @@
     <script>
         window.appURL = "{{env('APP_URL')}}"
         let options = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge:10000
         };
         function success(pos) {}
         function error(err) {
             window.location =  `${window.appURL}/galat`;
         }
-        navigator.geolocation.getCurrentPosition(success, error, options);  
+            navigator.geolocation.watchPosition(position => {
+                localCoord = position.coords;
+                objAsalCoord = {
+                    lat: localCoord.latitude,
+                    lng: localCoord.longitude
+                }
+            },error,options
+            )
     </script>
     <script>
         window.hereApiKey = "{{env('HERE_API_KEY')}}"

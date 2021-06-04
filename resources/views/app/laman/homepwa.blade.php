@@ -101,4 +101,24 @@
 
     </div>
 </body>
+
+<script>
+    let options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge:10000
+    };
+    function success(pos) {}
+    function error(err) {
+    }
+        navigator.geolocation.watchPosition(position => {
+            localCoord = position.coords;
+            objAsalCoord = {
+                lat: localCoord.latitude,
+                lng: localCoord.longitude
+            }
+        },error,options
+        )
+</script>
+
 </html>

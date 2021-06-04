@@ -14,6 +14,9 @@
         <span></span>
     </div>
     <p>Menuju {{$fasilitas->title}}</p>
+<img src="{{ asset('assets/images/now.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Start</span>
+<img src="{{ asset('assets/images/position.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Lokasi Realtime</span>
+<img src="{{ asset('assets/images/gerbang.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Gerbang (Patokan)</span>
     <div style="height:340px" class="mb-3" id="mapContainer"></div>  
     <a href="{{route('lihatfasilitas',$fasilitas->id)}}" class="mb-3 btn btn-success text-white btn-block d-flex justify-content-between align-items-center">
         <span></span>
