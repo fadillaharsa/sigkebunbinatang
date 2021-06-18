@@ -18,7 +18,7 @@
     <p>{{$destinasi->facility->description}}</p>
     <H1 class="mb-3"><b>PETA</b></H1>
 <img src="{{ asset('assets/images/now.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Start</span>
-<img src="{{ asset('assets/images/position.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Lokasi Realtime</span>
+<img src="{{ asset('assets/images/position.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Dilalui (Realtime)</span>
 <img src="{{ asset('assets/images/gerbang.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Gerbang (Patokan)</span>
     <div style="height:500px" id="mapContainer"></div>  
     {{-- <div class="card mb-3">
@@ -29,6 +29,15 @@
             <div id="summary"></div>
         </div>
     </div>  --}}
+    
+   <div style="margin-bottom:140px"class="px-3 fixed-bottom">
+        <div class="d-flex justify-content-end">
+            <a href="#app" class="btn btn-warning btn-circle btn-sm ">
+                <i class="fas fa-chevron-up"></i>
+            </a>
+        </div>
+    </div>
+    
     <div style="margin-bottom:90px" class="px-3 fixed-bottom">
         <a @if($destinasi->order<$jumlah) onclick="openDirection({{$routelist->facility->latitude}}, {{$routelist->facility->longitude}}, {{ $routelist->route_id }}, {{$routelist->order}})" @else href={{route('ruteselesai')}} @endif class="btn btn-success text-white btn-block d-flex justify-content-between align-items-center">
             <span></span>

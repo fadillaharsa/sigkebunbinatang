@@ -35,12 +35,6 @@ if (navigator.geolocation) {
         let zoom = ui.getControl('zoom');
         restrictMap(map);
         zoom.setAlignment('top-left');
-        // Create an info bubble object at a specific geographic location:
-        let bubble = new H.ui.InfoBubble({ lng: -6.99688, lat: 107.56771 }, {
-            content: '<b>Hello World!</b>'
-        });
-        // Add info bubble to the UI:
-        ui.addBubble(bubble);
         let mapEvents = new H.mapevents.MapEvents(map);
         let behavior = new H.mapevents.Behavior(mapEvents);
 
@@ -168,6 +162,11 @@ if (navigator.geolocation) {
                             facilities.push(marker);
                         if(index==0){
                             document.getElementById("terdekat").innerHTML = `<a href="${window.appURL}/fasilitas/${value.id}">${value.title}`;
+                            sessionStorage.setItem('nearest', value.title);
+                            let speak = new SpeechSynthesisUtterance();
+                            speak.lang = "id-ID";
+                            speak.text=`"Kamu sedang berada di"${value.title}`;
+                            window.speechSynthesis.speak(speak);
                         }
                         })
                     })
@@ -188,14 +187,113 @@ if (navigator.geolocation) {
             });
         }
 
+        function addDomMarker(map) {
+            var outerElement = document.createElement('div'),
+            innerElement = document.createElement('div');
+            outerElement.style.userSelect = 'none';
+            outerElement.style.webkitUserSelect = 'none';
+            outerElement.style.msUserSelect = 'none';
+            outerElement.style.mozUserSelect = 'none';
+            outerElement.style.cursor = 'default';
+            innerElement.style.color = 'black';
+            innerElement.style.backgroundColor = 'red';
+            innerElement.style.border = '2px solid black';
+            innerElement.style.font = 'normal 12px arial';
+            innerElement.style.lineHeight = '12px'
+            innerElement.style.paddingTop = '3px';
+            innerElement.style.paddingLeft = '3px';
+            innerElement.style.width = '25px';
+            innerElement.style.height = '25px';
+            innerElement.style.marginTop = '-10px';
+            innerElement.style.marginLeft = '-10px';
+            outerElement.appendChild(innerElement);
+            innerElement.innerHTML = '⚫';
+            function changeOpacity(evt) {
+            evt.target.style.opacity = 0.6;
+            };
+            function changeOpacityToOne(evt) {
+            evt.target.style.opacity = 1;
+            };
+            var domIcon = new H.map.DomIcon(outerElement, {
+            onAttach: function(clonedElement, domIcon, domMarker) {
+                clonedElement.addEventListener('mouseover', changeOpacity);
+                clonedElement.addEventListener('mouseout', changeOpacityToOne);
+            },
+            onDetach: function(clonedElement, domIcon, domMarker) {
+                clonedElement.removeEventListener('mouseover', changeOpacity);
+                clonedElement.removeEventListener('mouseout', changeOpacityToOne);
+            }
+            });
+            navigator.geolocation.getCurrentPosition(position => {
+                localCoord = position.coords;
+                objNowCoord = {
+                    lat: localCoord.latitude,
+                    lng: localCoord.longitude
+                }
+                var bearsMarker = new H.map.DomMarker({lat: objNowCoord.lat, lng: objNowCoord.lng}, {
+                icon: domIcon
+                });
+                map.addObject(bearsMarker);
+                navigator.geolocation.watchPosition(position => {
+                    localCoord = position.coords;
+                    objNowCoord = {
+                        lat: localCoord.latitude,
+                        lng: localCoord.longitude
+                    }
+                        ease(
+                        bearsMarker.getGeometry(),
+                        objNowCoord,
+                        1000,
+                        function(coord) {
+                        bearsMarker.setGeometry(coord);
+                        }
+                    )
+                    bearsMarker.setGeometry({ lat: objNowCoord.lat, lng: objNowCoord.lng });
+                },error,options
+                )
+            },error,options
+            )
+            function ease(
+                startCoord = {lat: 0, lng: 0},
+                endCoord = {lat: 1, lng: 1},
+                durationMs = 200,
+                onStep = console.log,
+                onComplete = function() {},
+            ) {
+                var raf = window.requestAnimationFrame || function(f) {window.setTimeout(f, 16)},
+                    stepCount = durationMs / 16,
+                    valueIncrementLat = (endCoord.lat - startCoord.lat) / stepCount,
+                    valueIncrementLng = (endCoord.lng - startCoord.lng) / stepCount,
+                    sinValueIncrement = Math.PI / stepCount,
+                    currentValueLat = startCoord.lat,
+                    currentValueLng = startCoord.lng,
+                    currentSinValue = 0;
+            
+                function step() {
+                currentSinValue += sinValueIncrement;
+                currentValueLat += valueIncrementLat * (Math.sin(currentSinValue) ** 2) * 2;
+                currentValueLng += valueIncrementLng * (Math.sin(currentSinValue) ** 2) * 2;
+            
+                if (currentSinValue < Math.PI) {
+                    onStep({lat: currentValueLat, lng: currentValueLng});
+                    raf(step);
+                } else {
+                    onStep(endCoord);
+                    onComplete();
+                }
+                }
+                raf(step);
+            }
+        }
+
         if (window.action == 'browse') {
-            console.log(category)
             let group = new H.map.Group();
             map.addObject(group);
             group.addEventListener('tap', function (evt) {
               var bubble =  new H.ui.InfoBubble(evt.target.getGeometry(), {
                 content: evt.target.getData()
               });
+              ui.getBubbles().forEach(bub => ui.removeBubble(bub));
               ui.addBubble(bubble);
             }, false);
 
@@ -204,30 +302,21 @@ if (navigator.geolocation) {
                     ev.currentPointer.viewportX,
                     ev.currentPointer.viewportY
                 );
-                //init(resultCoord.lat, resultCoord.lng, 40);
             }, false);
 
             init(group, objUserCoord.lat, objUserCoord.lng, 40);
-            navigator.geolocation.watchPosition(position => {
-                localCoord = position.coords;
-                objAsalCoord = {
-                    lat: localCoord.latitude,
-                    lng: localCoord.longitude
-                }
-            },error,options
-            )
-
-            navigator.geolocation.getCurrentPosition(position => {
-                localCoord = position.coords;
-                objNowCoord = {
-                    lat: localCoord.latitude,
-                    lng: localCoord.longitude
-                }
-                let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
-                let markerStart = new H.map.Marker({ lat: objNowCoord.lat, lng: objNowCoord.lng}, { icon: pngIcon });
-                map.addObject(markerStart);
-            },error,options
-            )
+            // navigator.geolocation.getCurrentPosition(position => {
+            //     localCoord = position.coords;
+            //     objNowCoord = {
+            //         lat: localCoord.latitude,
+            //         lng: localCoord.longitude
+            //     }
+            //     let pngIcon = new H.map.Icon(`${window.appURL}/public/assets/images/now.png`, { size: { w: 40, h: 40 } });
+            //     let markerStart = new H.map.Marker({ lat: objNowCoord.lat, lng: objNowCoord.lng}, { icon: pngIcon });
+            //     map.addObject(markerStart);
+            // },error,options
+            // )
+           addDomMarker(map);
         }
 
         let urlParams = new URLSearchParams(window.location.search);
@@ -263,7 +352,7 @@ if (navigator.geolocation) {
             map.addObject(markerFinish);
             
             let pngGate = new H.map.Icon(`${window.appURL}/public/assets/images/gerbang.png`, { size: { w: 40, h: 40 } });
-                let markerGate = new H.map.Marker({ lat: -6.89002, lng: 107.60758}, { icon: pngGate });
+                let markerGate = new H.map.Marker({ lat: -6.88970, lng: 107.60790}, { icon: pngGate });
                 map.addObject(markerGate);
             
 

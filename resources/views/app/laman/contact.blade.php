@@ -23,7 +23,12 @@
     <p>Informasi kontak telepon dan WA admin dapat dilihat di deskripsi pada media sosial Instagram.</p>
     <a href="https://www.instagram.com/bandung_zoological/" target="_blank" class="mb-3 btn btn-success text-white btn-block d-flex justify-content-between align-items-center">
         <span></span>
-        <span class="ml-2">Kontak Kami</span>
+        <span class="ml-2">Instagram</span>
+        <i class="fas fa-chevron-right"></i>
+    </a>
+    <a href="https://api.whatsapp.com/send/?phone=6283867028793&text&app_absent=0" target="_blank" class="mb-3 btn btn-success text-white btn-block d-flex justify-content-between align-items-center">
+        <span></span>
+        <span class="ml-2">WhatsApp</span>
         <i class="fas fa-chevron-right"></i>
     </a>
 </div>

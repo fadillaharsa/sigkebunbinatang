@@ -32,9 +32,29 @@
     @endif 
     <p>Cara Penggunaan: <br> Ketuk Gambar Ikon untuk Melihat Detil</p>  
 </div>
-<span class="text-info mb-1">Terdekat: <span id="terdekat"></span></span><br>
-<img src="{{ asset('assets/images/now.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Lokasi Sekarang (Tidak Realtime)</span>
+<span class="text-info mb-1">Terdekat: <span id="terdekat"></span> (Refresh untuk Update)</span><br>
+<img src="{{ asset('assets/images/Coord.png') }}" class="img-fluid mb-2" style="height:15px"> <span class="text-info">Lokasi Sekarang Realtime</span>
 <div style="height:500px" id="mapContainer"></div> 
+
+<div style="margin-bottom:90px"class="px-3 fixed-bottom row">
+    <div class="col-6 d-flex justify-content-start">
+        <a onClick="window.location.reload();"  class="btn btn-warning btn-circle btn-sm ">
+            <i class="fas fa-sync-alt"></i> Refresh
+        </a>
+    </div>
+    <div class="col-6 d-flex justify-content-end">
+        <a href="#app" class="btn btn-warning btn-circle btn-sm ">
+            <i class="fas fa-chevron-up"></i>
+        </a>
+    </div>
+</div>
+<div style="margin-bottom:130px"class="px-3 fixed-bottom row">
+    <div class="col-6 d-flex justify-content-start">
+        <a onClick="speakFunction();"  class="btn btn-info btn-circle">
+            <i class="fas fa-volume-up"></i>
+        </a>
+    </div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModalLabel" aria-hidden="true">
@@ -96,6 +116,13 @@
 @push('script')
     <script>
         window.action = "browse"
+        function speakFunction() {
+            let nearest = sessionStorage.getItem('nearest');
+            let speak = new SpeechSynthesisUtterance();
+            speak.lang = "id-ID";
+            speak.text=`"Kamu sedang berada di"${nearest}`;
+            window.speechSynthesis.speak(speak);
+        }
     </script>
     <script>
         window.appURL = "{{env('APP_URL')}}"
